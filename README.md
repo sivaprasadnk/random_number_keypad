@@ -14,7 +14,7 @@
 Add the widget file `random_number_keypad.dart` to your project and import it:
 
 ```dart
-import 'random_number_keypad.dart';
+import 'package:random_number_keypad/random_number_keypad.dart';
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ import 'random_number_keypad.dart';
 
 ```dart
 import 'package:flutter/material.dart';
-import 'random_number_keypad.dart';
+import 'package:random_number_keypad/random_number_keypad.dart';
 
 void main() {
   runApp(MyApp());
