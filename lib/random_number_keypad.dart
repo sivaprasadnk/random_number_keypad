@@ -1,5 +1,4 @@
 library random_number_keypad;
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,14 +16,65 @@ class RandomNumberKeypad extends StatefulWidget {
   /// The completed PIN is passed as a string to this function.
   final Function(String) onComplete;
 
+  /// Determines whether the input should be visible or hidden (masked).
+  /// Defaults to true (visible).
+  final bool showInput;
+
+  /// The background color of the keypad buttons.
+  final Color buttonColor;
+
+  /// The text style of the keypad button labels.
+  final TextStyle buttonTextStyle;
+
+  /// The shape of the input boxes (e.g., rounded rectangle, circle).
+  final ShapeBorder inputShape;
+
+  /// The text style of the input text.
+  final TextStyle inputTextStyle;
+
+  /// The fill color of the input boxes when filled.
+  final Color inputFillColor;
+
+  /// The background color of the keypad container.
+  final Color keypadBackgroundColor;
+
+  /// The text style of the "Done" button.
+  final TextStyle doneButtonTextStyle;
+
+  /// The text style of the "Clear" button.
+  final TextStyle clearButtonTextStyle;
+
   /// Creates an instance of [RandomNumberKeypad].
   ///
   /// [pinLength] specifies the number of digits for the PIN.
   /// [onComplete] is required and triggers when the PIN entry is complete.
+  /// [showInput] determines if the entered PIN is visible or masked.
+  /// [buttonColor] sets the background color of the keypad buttons.
+  /// [buttonTextStyle] sets the text style of the keypad button labels.
+  /// [inputShape] defines the shape of the input boxes.
+  /// [inputTextStyle] sets the text style of the input text.
+  /// [inputFillColor] sets the fill color of input boxes when filled.
+  /// [keypadBackgroundColor] sets the background color of the keypad container.
+  /// [doneButtonTextStyle] sets the text style of the "Done" button.
+  /// [clearButtonTextStyle] sets the text style of the "Clear" button.
   const RandomNumberKeypad({
     super.key,
     this.pinLength = 4,
     required this.onComplete,
+    this.showInput = true,
+    this.buttonColor = Colors.blueAccent,
+    this.buttonTextStyle = const TextStyle(fontSize: 20, color: Colors.white),
+    this.inputShape = const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+    this.inputTextStyle =
+        const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    this.inputFillColor = Colors.blueAccent,
+    this.keypadBackgroundColor = Colors.white,
+    this.doneButtonTextStyle =
+        const TextStyle(color: Colors.blue, fontSize: 18),
+    this.clearButtonTextStyle =
+        const TextStyle(color: Colors.red, fontSize: 18),
   });
 
   @override
@@ -81,7 +131,7 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
         child: Material(
           elevation: 4,
           child: Container(
-            color: Colors.white,
+            color: widget.keypadBackgroundColor,
             padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -104,7 +154,7 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
                     if (index < 9) {
                       value = _keys[index];
                     } else if (index == 9) {
-                      value = ''; // Empty placeholder
+                      value = 'Clear'; // Empty placeholder
                     } else if (index == 10) {
                       value = _keys.last; // "0"
                     } else {
@@ -121,7 +171,7 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
                                   .substring(0, _pinController.text.length - 1);
                             });
                           }
-                        } else if (value.isNotEmpty) {
+                        } else if (value.isNotEmpty && value != "Clear") {
                           if (_pinController.text.length < widget.pinLength) {
                             setState(() {
                               _pinController.text += value;
@@ -133,28 +183,37 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
                               _dismissKeyboard();
                             }
                           }
+                        } else if (value == "Clear") {
+                          setState(() {
+                            _pinController.clear();
+                          });
                         }
                       },
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: Colors.blue.shade100,
+                          color: widget.buttonColor,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: icon != null
-                            ? Icon(icon, size: 28, color: Colors.blue.shade900)
-                            : Text(value, style: const TextStyle(fontSize: 20)),
+                            ? Icon(icon, size: 28, color: Colors.white)
+                            : Text(value, style: widget.buttonTextStyle),
                       ),
                     );
                   },
                 ),
-                TextButton(
-                  onPressed: _dismissKeyboard,
-                  child: const Text(
-                    'Done',
-                    style: TextStyle(color: Colors.blue, fontSize: 18),
-                  ),
-                )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: _dismissKeyboard,
+                      child: Text(
+                        'Done',
+                        style: widget.doneButtonTextStyle,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -181,17 +240,15 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
                 width: 50,
                 height: 50,
                 margin: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 2),
-                  borderRadius: BorderRadius.circular(8),
-                  color: filled ? Colors.blue.shade100 : Colors.transparent,
+                decoration: ShapeDecoration(
+                  shape: widget.inputShape,
+                  color: filled ? widget.inputFillColor : widget.inputFillColor,
                 ),
                 alignment: Alignment.center,
                 child: filled
                     ? Text(
-                        _pinController.text[index],
-                        style: const TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                        widget.showInput ? _pinController.text[index] : '*',
+                        style: widget.inputTextStyle,
                       )
                     : null,
               );

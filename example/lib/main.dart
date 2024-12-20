@@ -31,7 +31,20 @@ class RandomPinExample extends StatelessWidget {
       appBar: AppBar(title: const Text('Random PIN Keyboard')),
       body: Center(
         child: RandomNumberKeypad(
+          inputFillColor: Colors.white,
+          inputTextStyle:
+              const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+          doneButtonTextStyle: const TextStyle(color: Colors.deepOrange),
           pinLength: 4,
+          inputShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          showInput: true,
+          buttonColor: Colors.red,
+          buttonTextStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
           onComplete: (pin) {
             print('Entered PIN: $pin');
             // Add PIN validation logic here.

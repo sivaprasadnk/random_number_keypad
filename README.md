@@ -6,8 +6,7 @@
 - Numeric keypad with random key positions.
 - Customizable PIN length (default is 4).
 - Option to show or hide PIN input (masked input).
-- Callback when the user completes PIN entry.
-- Dismissible keyboard overlay.
+- Other customisation options.
 
 ## Installation
 
@@ -55,6 +54,13 @@ class MyApp extends StatelessWidget {
 | Parameter   | Type                   | Default | Description |
 |-------------|------------------------|---------|-------------|
 | `pinLength` | `int`                 | `4`     | The length of the PIN to be entered. |
+| `buttonColor` | `Color`                 | `Colors.blueAccent`     | Sets the background color of the keypad buttons. |
+| `buttonTextStyle` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | Sets the text style of the keypad button labels. |
+| `inputShape` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | Defines the shape of the input boxes. |
+| `inputTextStyle` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | Sets the text style of the input text. |
+| `inputFillColor` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | sets the fill color of input boxes when filled. |
+| `keypadBackgroundColor` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | sets the background color of the keypad container. |
+| `doneButtonTextStyle` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | Sets the text style of the "Done" button. |
 | `onComplete`| `Function(String)`    | Required| A callback function triggered when the user completes the PIN entry. The entered PIN is passed as a string. |
 | `showInput` | `bool`                | `true`  | Determines whether the entered PIN should be visible (`true`) or masked (`false`). |
 
