@@ -1,6 +1,6 @@
 # RandomNumberKeypad
 
-`RandomNumberKeypad` is a customizable Flutter widget that provides a secure numeric keypad with randomly positioned keys for PIN input. It is designed to enhance user security by shuffling the keypad layout after every use. The widget allows for masked or visible PIN entry and supports various PIN lengths.
+`RandomNumberKeypad`  is a customizable Flutter widget that provides a secure numeric keypad for PIN input. It features an optional randomization of keys to enhance user security, shuffling the keypad layout after every use when enabled. The widget supports masked or visible PIN entry, allows various PIN lengths, and provides extensive customization options for appearance and behavior.
 
 ## Features
 - Numeric keypad with random key positions.

@@ -3,10 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-/// A widget that provides a custom numeric keypad with randomly positioned keys.
+/// A widget that provides a custom numeric keypad with optionally randomized keys.
 ///
 /// The keypad supports PIN input with separate boxes for each digit. It randomizes
-/// the keys on each use to enhance security.
+/// the keys on each use to enhance security if enabled.
 class RandomNumberKeypad extends StatefulWidget {
   /// The length of the PIN to be entered by the user.
   /// Defaults to 4 if not provided.
@@ -44,6 +44,10 @@ class RandomNumberKeypad extends StatefulWidget {
   /// The text style of the "Clear" button.
   final TextStyle clearButtonTextStyle;
 
+  /// Whether the keys should be randomized.
+  /// Defaults to true (keys are randomized).
+  final bool isRandom;
+
   /// Creates an instance of [RandomNumberKeypad].
   ///
   /// [pinLength] specifies the number of digits for the PIN.
@@ -57,6 +61,7 @@ class RandomNumberKeypad extends StatefulWidget {
   /// [keypadBackgroundColor] sets the background color of the keypad container.
   /// [doneButtonTextStyle] sets the text style of the "Done" button.
   /// [clearButtonTextStyle] sets the text style of the "Clear" button.
+  /// [isRandom] determines whether the keypad keys should be randomized.
   const RandomNumberKeypad({
     super.key,
     this.pinLength = 4,
@@ -75,6 +80,7 @@ class RandomNumberKeypad extends StatefulWidget {
         const TextStyle(color: Colors.blue, fontSize: 18),
     this.clearButtonTextStyle =
         const TextStyle(color: Colors.red, fontSize: 18),
+    this.isRandom = true,
   });
 
   @override
@@ -90,7 +96,7 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
   @override
   void initState() {
     super.initState();
-    _generateRandomKeys();
+    _generateKeys();
   }
 
   @override
@@ -100,10 +106,13 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
     super.dispose();
   }
 
-  /// Generates a randomized list of numeric keys (0-9).
-  void _generateRandomKeys() {
+  /// Generates a list of numeric keys (0-9).
+  /// If randomization is enabled, the keys are shuffled.
+  void _generateKeys() {
     _keys = List.generate(10, (index) => index.toString());
-    _keys.shuffle(Random());
+    if (widget.isRandom) {
+      _keys.shuffle(Random());
+    }
   }
 
   /// Displays the custom numeric keypad as an overlay.
@@ -114,11 +123,11 @@ class _RandomNumberKeypadState extends State<RandomNumberKeypad> {
     }
   }
 
-  /// Dismisses the custom numeric keypad and regenerates random keys.
+  /// Dismisses the custom numeric keypad and regenerates keys.
   void _dismissKeyboard() {
     _keyboardOverlay?.remove();
     _keyboardOverlay = null;
-    _generateRandomKeys();
+    _generateKeys();
   }
 
   /// Creates the overlay entry containing the numeric keypad.
