@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
 | `doneButtonTextStyle` | `TextStyle`                 | `TextStyle(fontSize: 20, color: Colors.white)`     | Sets the text style of the "Done" button. |
 | `onComplete`| `Function(String)`    | Required| A callback function triggered when the user completes the PIN entry. The entered PIN is passed as a string. |
 | `showInput` | `bool`                | `true`  | Determines whether the entered PIN should be visible (`true`) or masked (`false`). |
+| `isRandom` | `bool`                | `true`  |  Determines whether the keypad keys should be randomized. |
 
 ## Customization
 

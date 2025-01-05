@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Updating Documentation.
+
 ## 1.0.3
 
 * Adding parameter to enable / disable randomisation of keypad
